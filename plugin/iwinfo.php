@@ -30,6 +30,10 @@ switch($obj->args['type']) {
 		$obj->rrd_title = sprintf('Link Quality (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'quality';
 		break;
+	case 'stations':
+		$obj->rrd_title = sprintf('Number of Stations (%s)', $obj->args['pinstance']);
+		$obj->rrd_vertical = 'No.';
+		break;
 }
 
 collectd_flush($obj->identifiers);
