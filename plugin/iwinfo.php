@@ -17,6 +17,7 @@ switch($obj->args['type']) {
 	case 'bitrate':
 		$obj->rrd_title = sprintf('Bitrate (%s)', $obj->args['pinstance']);
 		$obj->rrd_vertical = 'Mb/s';
+		$obj->scale = '0.000001';
 		break;
 	case 'signal_noise':
 		$obj->rrd_title = sprintf('Noise level (%s)', $obj->args['pinstance']);
