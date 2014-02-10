@@ -17,13 +17,12 @@ switch($obj->args['pinstance']) {
 	case 'links':
 		switch($obj->args['type']) {
 			case 'links':
-				$obj->rrd_title = sprintf('Number of (%s) table links', $obj->args['tinstance']);
+				$obj->rrd_title = 'Number of links';
 				$obj->rrd_vertical = 'Nr';
 				break;
 			case 'signal_quality':
-				$obj->rrd_title = sprintf('signal_quality (%s) table links', $obj->args['category']);
-				$obj->rrd_vertical = 'Nr';
-				$obj->width = 600;
+				$obj->rrd_title = sprintf('signal_quality %s', $obj->args['tinstance']);
+				$obj->rrd_vertical = 'lq/nlq';
 				$obj->colors = '';
 				break;
 		}
