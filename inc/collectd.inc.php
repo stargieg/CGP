@@ -39,7 +39,8 @@ function collectd_plugindata($host, $plugin=NULL) {
 			(?:\-(?P<pi>.+))?  # plugin instance
 			/
 			(?P<t>[\w_]+)      # type
-			(?:\-(?P<ti>.+))?  # type instance
+			(?:\-(?P<ti>[0-9A-Za-z\.]+\-*[0-9A-Za-z\.]*))?  # type instance
+			(?:\-(?P<tsi>.+))?  # type second instance
 			\.rrd
 		`x', $item, $matches);
 
@@ -49,6 +50,7 @@ function collectd_plugindata($host, $plugin=NULL) {
 			'pi' => isset($matches['pi']) ? $matches['pi'] : '',
 			't'  => $matches['t'],
 			'ti' => isset($matches['ti']) ? $matches['ti'] : '',
+			'tsi' => isset($matches['tsi']) ? $matches['tsi'] : '',
 		);
 	}
 
@@ -80,7 +82,7 @@ function collectd_plugins($host) {
 
 # returns an array of all pi/t/ti of an plugin
 function collectd_plugindetail($host, $plugin, $detail, $where=NULL) {
-	$details = array('pi', 'c', 't', 'ti');
+	$details = array('pi', 'c', 't', 'ti', 'tsi');
 	if (!in_array($detail, $details))
 		return false;
 
@@ -140,6 +142,7 @@ function plugin_sort($data) {
 	foreach ($data as $key => $row) {
 		$pi[$key] = (isset($row['pi'])) ? $row['pi'] : null;
 		$c[$key]  = (isset($row['c']))  ? $row['c'] : null;
+		$tsi[$key] = (isset($row['tsi'])) ? $row['tsi'] : null;
 		$ti[$key] = (isset($row['ti'])) ? $row['ti'] : null;
 		$t[$key]  = (isset($row['t']))  ? $row['t'] : null;
 	}
@@ -178,6 +181,7 @@ function graphs_from_plugin($host, $plugin, $overview=false) {
 			isset($items['pi']) ? $_GET['pi'] = $items['pi'] : $_GET['pi'] = '';
 			isset($items['t']) ? $_GET['t'] = $items['t'] : $_GET['t'] = '';
 			isset($items['ti']) ? $_GET['ti'] = $items['ti'] : $_GET['ti'] = '';
+			isset($items['tsi']) ? $_GET['tsi'] = $items['tsi'] : $_GET['tsi'] = '';
 			include $CONFIG['webdir'].'/plugin/'.$plugin.'.php';
 		} else {
 			printf('<a href="%s%s"><img src="%s%s"></a>'."\n",

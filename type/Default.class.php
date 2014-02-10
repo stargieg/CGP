@@ -76,6 +76,7 @@ class Type_Default {
 			'category' => GET('c'),
 			'type' => GET('t'),
 			'tinstance' => GET('ti'),
+			'tsinstance' => GET('tsi'),
 		);
 		$this->seconds = GET('s');
 	}
@@ -160,6 +161,8 @@ class Type_Default {
 		);
 
 		$wildcard = strlen($this->args['tinstance']) ? '.' : '[-.]*';
+		if (strlen($this->args['tsinstance'])) 
+			$wildcard = '[-.]*';
 
 		$files = glob($this->datadir .'/'. $identifier . $wildcard . 'rrd');
 
